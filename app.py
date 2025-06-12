@@ -7,8 +7,8 @@ import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
 
+CORS(app) 
 mail = Mail(app)
 
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
@@ -18,5 +18,10 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 def send_mail():
     return handle_send_mail(mail)
 
+@app.route("/")
+def index():
+    return "📬 Flask Mail Sender API is running!"
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))   
+    app.run(host="0.0.0.0", port=port)         
